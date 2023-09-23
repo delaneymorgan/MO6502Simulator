@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-from PersonalityROM import PersonalityROM
+from Base.PersonalityROM import PersonalityROM
 
 
 class AppleIIePersonalityROM(PersonalityROM):

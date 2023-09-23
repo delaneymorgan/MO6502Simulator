@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-from BootROM import BootROM
+from Base.BootROM import BootROM
 
 
 class AppleIIeBootROM(BootROM):

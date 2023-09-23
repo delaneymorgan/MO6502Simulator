@@ -1,9 +1,21 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-import RegisterSet
-from BitRegister import BitRegister
-from Register import Register
+from enum import Enum
+
+from Base import RegisterSet
+from Base.BitRegister import BitRegister
+from Base.Register import Register
+
+
+class StatusBits(Enum):
+    C = 0
+    Z = 1
+    I = 2
+    D = 3
+    B = 4
+    V = 6
+    N = 7
 
 
 class MOS6502RegisterSet(RegisterSet):
@@ -18,8 +30,16 @@ class MOS6502RegisterSet(RegisterSet):
         self.A = Register(8)
         self.X = Register(8)
         self.Y = Register(8)
-        bit_map = dict(N=7, V=6, B=4, D=3, I=2, Z=1, C=0)
-        self.S = BitRegister(8, bit_map)
+        self.S = BitRegister(8)
         self.SP = Register(8)
         self.PC = Register(16)
+        return
+
+    def set_status(self, value):
+        if value == 0:
+            self.S.set_bit(StatusBits.Z)
+        if value < 0:
+            self.S.set_bit(StatusBits.N)
+        else:
+            self.S.clear_bit(StatusBits.N)
         return
