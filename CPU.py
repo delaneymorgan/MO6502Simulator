@@ -2,8 +2,6 @@
 # coding=utf-8
 
 
-import RegisterSet
-
 class CPU(object):
     def __init__(self, registers, decoder):
         self.registers = registers
