@@ -9,8 +9,9 @@ class Instruction(object):
     cycles: int = 0
     action: Callable
 
-    def __init__(self, mnemonic, cycles, action):
+    def __init__(self, mnemonic, bytes, cycles, action):
         self.mnemonic = mnemonic
+        self.bytes = bytes
         self.cycles = cycles
         self.action = action
         return
