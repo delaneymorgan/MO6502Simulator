@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-from enum import Enum
-
 from Base import RegisterSet
 from Base.BitRegister import BitRegister
 from Base.Register import Register
+from Base.RegisterBits import RegisterBits
 
 
-class StatusBits(Enum):
+class StatusBits(RegisterBits):
     C = 0
     Z = 1
     I = 2

@@ -71,19 +71,19 @@ class MOS6502Mnemonic(Enum):
 class MOS6502Instruction(Instruction):
     mode: MOS6502AddressingMode
 
-    def __init__(self, mnemonic, mode, bytes, cycles, action):
-        super().__init__(mnemonic, bytes, cycles, action)
+    def __init__(self, mnemonic, mode, num_bytes, cycles, action):
+        super().__init__(mnemonic, num_bytes, cycles, action)
         self.mode = mode
         return
 
     @staticmethod
-    def _operand8(registers, memory):
-        operand = memory.get(registers.PC)
+    def _operand8(registers, memory_map):
+        operand = memory_map.get(registers.PC)
         return operand
 
     @staticmethod
-    def _operand16(registers, memory):
-        operand = (memory.get(registers.PC) << 8) | memory.get(registers.PC + 1)
+    def _operand16(registers, memory_map):
+        operand = (memory_map.get(registers.PC) << 8) | memory_map.get(registers.PC + 1)
         return operand
 
     @staticmethod
@@ -91,26 +91,26 @@ class MOS6502Instruction(Instruction):
         return
 
     @staticmethod
-    def BRK(registers, memory, ram, rom):
-        ram.set(0x0100 | registers.SP, registers.PC + 2)
+    def brk(registers, memory_map):
+        memory_map.set(0x0100 | registers.SP, registers.PC + 2)
         registers.SP -= 2
         status = registers.S.set_bit(StatusBits.I)
-        ram.set(0x0100 | registers.SP, status)
+        memory_map.set(0x0100 | registers.SP, status)
         registers.SP -= 1
         return
 
     @staticmethod
-    def ORA_imm(registers, memory, ram, rom):
-        registers.A.value |= MOS6502Instruction._operand8(registers, memory)
+    def ora_imm(registers, memory_map):
+        registers.A.value |= MOS6502Instruction._operand8(registers, memory_map)
         registers.set_status(registers.A.value)
         registers.PC += 2
         return
 
     @staticmethod
-    def ORA_zpg(registers, ram, rom):
+    def ora_zpg(registers, memory_map):
         return
 
-    def execute(self, registers, ram, rom):
+    def execute(self, registers, memory_map):
         if self.action is not None:
-            self.action(registers, ram, rom)
+            self.action(registers, memory_map)
         return

@@ -1,21 +1,15 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-from BootROM import BootROM
 from CPU import CPU
-from PersonalityROM import PersonalityROM
-from RAM import RAM
+from MemoryMap import MemoryMap
 
 
 class Computer(object):
-    boot_rom: BootROM
-    pers_rom: PersonalityROM
-    ram: RAM
+    memory_map: MemoryMap
     cpu: CPU
 
-    def __init__(self, boot_rom, pers_rom, ram, cpu):
-        self.boot_rom = boot_rom
-        self.pers_rom = pers_rom
-        self.ram = ram
+    def __init__(self, memory_map: MemoryMap, cpu: CPU):
+        self.memory_map = memory_map
         self.cpu = cpu
         return
